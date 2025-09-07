@@ -9,28 +9,19 @@ use App\Repository\RecipeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use JsonException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-final class RecipeController extends AbstractController
+class RecipeController extends AbstractController
 {
-
-    #[Route('/demo')]
-    public function demo(Demo $demo)
-    {
-        dd($demo);
-    }
-
     #[Route('/recettes', name: 'recipe.index')]
-    public function index(Request $request, RecipeRepository $repository, EntityManagerInterface $em): Response
+    public function index(Request $request, RecipeRepository $repository): Response
     {
-        // $recipes = $em->getRepository(Recipe::class)->findWithDurationLowerThan(40);
-
-        $recipes = $repository->findAll();
-
+        $recipes = $repository->findWithDurationLowerThan(20);
         return $this->render('recipe/index.html.twig', [
             'recipes' => $recipes,
         ]);
@@ -52,9 +43,9 @@ final class RecipeController extends AbstractController
     }
 
     #[Route('/recettes/{id}/edit', name: 'recipe.edit', methods: ['GET', 'POST'])]
-    public function edit(Recipe $recipe, Request $request, EntityManagerInterface $em)
+    public function edit(Recipe $recipe, Request $request, EntityManagerInterface $em, FormFactoryInterface $formFactory)
     {
-        $form = $this->createForm(RecipeType::class, $recipe);
+        $form = $formFactory->create(RecipeType::class, $recipe);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
