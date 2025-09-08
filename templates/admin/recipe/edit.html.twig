@@ -5,6 +5,15 @@
 {% block body %}
 
 	{{ form_start(form) }}
+	<div class="row">
+		<div class="col-sm">{{form_row(form.title)}}</div>
+		<div class="col-sm">{{form_row(form.slug)}}</div>
+		<div class="col-sm">{{form_row(form.category)}}</div>
+	</div>
+	<div class="row">
+		<div class="col-sm">{{form_row(form.content)}}</div>
+		<div class="col-sm">{{form_row(form.duration)}}</div>
+	</div>
 	{{ form_end(form) }}
 
 {% endblock %}

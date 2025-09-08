@@ -20,7 +20,7 @@ class FormListenerFactory
             $data = $event->getData();
             if (empty($data['slug'])) {
                 $slugger = new AsciiSlugger();
-                $data['slug'] = strtolower($this-> slugger->slug($data[$field]));
+                $data['slug'] = strtolower($this->slugger->slug($data[$field]));
                 $event->setData($data);
             }
         };

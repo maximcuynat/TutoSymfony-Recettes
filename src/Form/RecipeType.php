@@ -3,6 +3,9 @@
 namespace App\Form;
 
 use App\Entity\Recipe;
+use Proxies\__CG__\App\Entity\Category;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -26,10 +29,17 @@ class RecipeType extends AbstractType
             ->add('slug', TextType::class, [
                 'required' => false
             ])
+            ->add('category', EntityType::class, [
+                'class' => Category::class,
+                'choice_label' => 'name',
+                'label' => 'Catégorie',
+            ])
             ->add('content', TextType::class, [
                 'empty_data' => ''
             ])
-            ->add('duration')
+            ->add('duration', IntegerType::class, [
+                'label' => 'Durée de la recette (minutes)'
+            ])
             ->add('save', SubmitType::class, [
                 'label' => 'Envoyer'
             ])

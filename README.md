@@ -2,3 +2,7 @@
 Lien vers sa chaine [Grafikart.fr](https://www.youtube.com/@grafikart)
 
 Lien vers la playlist de vidéos : [Découvrir le framework PHP Symfony 7](https://www.youtube.com/playlist?list=PLjwdMgw5TTLXuvlGqP18gbJCYVg7y6Fig)
+
+## Lancer projet
+Cloner puis executer la commande : 
+```php -S localhost:8000 -t public```
