@@ -13,16 +13,17 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 #[Route(path: "/admin/recettes", name: "admin.recipe.")]
 class RecipeController extends AbstractController
 {
     #[Route('/', name: 'index')]
+    #[IsGranted('ROLE_USER')]
     public function index(RecipeRepository $repository, EntityManagerInterface $entityManager): Response
     {
         $recipes = $repository->findWithDurationLowerThan(20);
-
         return $this->render('admin/recipe/index.html.twig', [
             'recipes' => $recipes,
         ]);
