@@ -13,6 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Routing\Requirement\Requirement;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Vich\UploaderBundle\Templating\Helper\UploaderHelper;
 
 #[Route(path: "/admin/recettes", name: "admin.recipe.")]
 class RecipeController extends AbstractController
@@ -46,8 +47,10 @@ class RecipeController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'], requirements: ['id' => Requirement::DIGITS])]
-    public function edit(Recipe $recipe, Request $request, EntityManagerInterface $em, FormFactoryInterface $formFactory)
+    public function edit(Recipe $recipe, Request $request, EntityManagerInterface $em, FormFactoryInterface $formFactory, UploaderHelper $helper)
     {
+        // dd($helper->asset($recipe, 'thumbnailFile'));
+
         $form = $formFactory->create(RecipeType::class, $recipe);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
